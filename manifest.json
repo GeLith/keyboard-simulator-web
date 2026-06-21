@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "键盘输入模拟器",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "模拟键盘输入，支持延迟设置和重复输入",
   "permissions": ["activeTab", "scripting", "storage"],
   "action": {
