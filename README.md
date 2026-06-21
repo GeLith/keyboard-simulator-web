@@ -8,7 +8,7 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 安装方法
 
-1. 下载 [keyboard-simulator.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.1.1/keyboard-simulator.zip) 并解压
+1. 下载 [keyboard-simulator-v1.1.1.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.1.1/keyboard-simulator-v1.1.1.zip) 并解压
 2. 打开 Chrome，地址栏输入 `chrome://extensions/` 回车
 3. 开启右上角「开发者模式」
 4. 点击「加载已解压的扩展程序」，选择解压后的文件夹
