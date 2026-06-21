@@ -4,8 +4,8 @@
   let ball = null;
   let panel = null;
   let isDragging = false;
-  let dragOffset = {x: 0, y: 0};
-  let panelInitialized = false;
+
+  const VERSION = '1.0.0';
 
   function createBall() {
     if (ball) return;
@@ -15,32 +15,47 @@
     ball.innerHTML = '<span id="ks-ball-icon">⌨</span>';
     document.body.appendChild(ball);
 
+    // 恢复保存的位置
+    chrome.storage.local.get(['ballPos'], function(result) {
+      if (result.ballPos) {
+        ball.style.top = result.ballPos.top + 'px';
+        ball.style.left = result.ballPos.left + 'px';
+        ball.style.right = 'auto';
+      }
+    });
+
     ball.addEventListener('mousedown', function(e) {
-      isDragging = false;
-      dragOffset.x = e.clientX - ball.offsetLeft;
-      dragOffset.y = e.clientY - ball.offsetTop;
+      e.preventDefault();
       const startX = e.clientX;
       const startY = e.clientY;
+      const startTop = ball.offsetTop;
+      const startLeft = ball.offsetLeft;
+      let moved = false;
 
       function onMouseMove(ev) {
-        const dx = Math.abs(ev.clientX - startX);
-        const dy = Math.abs(ev.clientY - startY);
-        if (dx > 5 || dy > 5) {
-          isDragging = true;
+        const dx = ev.clientX - startX;
+        const dy = ev.clientY - startY;
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) {
+          moved = true;
         }
-        if (isDragging) {
+        if (moved) {
           ball.style.transition = 'none';
           ball.style.right = 'auto';
-          ball.style.left = (ev.clientX - dragOffset.x) + 'px';
-          ball.style.top = (ev.clientY - dragOffset.y) + 'px';
+          ball.style.top = (startTop + dy) + 'px';
+          ball.style.left = (startLeft + dx) + 'px';
         }
       }
 
       function onMouseUp() {
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
-        if (!isDragging) {
+        if (!moved) {
           togglePanel();
+        } else {
+          // 保存位置
+          chrome.storage.local.set({
+            ballPos: { top: ball.offsetTop, left: ball.offsetLeft }
+          });
         }
       }
 
@@ -86,10 +101,32 @@
         <div id="ks-status">就绪 - 点击球图标可收起</div>
       </div>
       <div id="ks-panel-footer">
-        v1.0.0 | <a href="https://github.com/GeLith/keyboard-simulator-web" target="_blank">GitHub</a>
+        v${VERSION} | <a href="https://github.com/GeLith/keyboard-simulator-web" target="_blank">GitHub</a>
       </div>
     `;
     document.body.appendChild(panel);
+
+    // 恢复保存的设置
+    chrome.storage.local.get(['panelSettings'], function(result) {
+      if (result.panelSettings) {
+        const s = result.panelSettings;
+        if (s.delay !== undefined) document.getElementById('ks-delay').value = s.delay;
+        if (s.interval !== undefined) document.getElementById('ks-interval').value = s.interval;
+      }
+    });
+
+    // 保存设置
+    function savePanelSettings() {
+      chrome.storage.local.set({
+        panelSettings: {
+          delay: document.getElementById('ks-delay').value,
+          interval: document.getElementById('ks-interval').value
+        }
+      });
+    }
+
+    document.getElementById('ks-delay').addEventListener('change', savePanelSettings);
+    document.getElementById('ks-interval').addEventListener('change', savePanelSettings);
 
     document.getElementById('ks-close').addEventListener('click', function() {
       panel.classList.remove('ks-show');
@@ -122,8 +159,6 @@
       shouldStop = true;
       document.getElementById('ks-status').textContent = '正在停止...';
     });
-
-    panelInitialized = true;
   }
 
   function simulateKeyInput(char) {
@@ -215,6 +250,14 @@
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
+  // 快捷键: Alt+K 切换面板
+  document.addEventListener('keydown', function(e) {
+    if (e.altKey && e.key === 'k') {
+      e.preventDefault();
+      togglePanel();
+    }
+  });
+
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message.action === 'startTyping') {
       createBall();
@@ -228,6 +271,9 @@
       sendResponse({ success: true });
     } else if (message.action === 'stopTyping') {
       shouldStop = true;
+      sendResponse({ success: true });
+    } else if (message.action === 'togglePanel') {
+      togglePanel();
       sendResponse({ success: true });
     }
     return true;

@@ -26,5 +26,13 @@
   ],
   "background": {
     "service_worker": "background.js"
+  },
+  "commands": {
+    "toggle-panel": {
+      "suggested_key": {
+        "default": "Alt+K"
+      },
+      "description": "切换面板显示/隐藏"
+    }
   }
 }
