@@ -2,7 +2,7 @@
 
 这是一个浏览器扩展，用于模拟键盘输入，适用于不支持粘贴输入的网页。
 
-GitHub: https://github.com/gelith/keyboard-simulator
+GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 安装方法
 

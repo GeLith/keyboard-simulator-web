@@ -86,7 +86,7 @@
         <div id="ks-status">就绪 - 点击球图标可收起</div>
       </div>
       <div id="ks-panel-footer">
-        v1.0.0 | <a href="https://github.com/gelith/keyboard-simulator" target="_blank">GitHub</a>
+        v1.0.0 | <a href="https://github.com/GeLith/keyboard-simulator-web" target="_blank">GitHub</a>
       </div>
     `;
     document.body.appendChild(panel);
