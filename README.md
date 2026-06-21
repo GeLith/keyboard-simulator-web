@@ -4,6 +4,8 @@
 
 GitHub: https://github.com/GeLith/keyboard-simulator-web
 
+官网: https://felixdd.top/keyboard.html
+
 ## 安装方法
 
 ### 方式一：拖拽安装（推荐）
