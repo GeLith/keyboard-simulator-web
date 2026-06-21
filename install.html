@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>键盘输入模拟器 - 安装指南</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Microsoft YaHei", sans-serif; background: #f0f2f5; color: #333; }
+    .container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+    .card { background: #fff; border-radius: 12px; padding: 30px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+    h1 { text-align: center; color: #337ab7; margin-bottom: 10px; }
+    .subtitle { text-align: center; color: #888; margin-bottom: 30px; }
+    .step { display: flex; gap: 16px; margin-bottom: 24px; align-items: flex-start; }
+    .step-num { width: 36px; height: 36px; background: #337ab7; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
+    .step-content h3 { margin-bottom: 6px; color: #333; }
+    .step-content p { color: #666; line-height: 1.6; }
+    .btn { display: inline-block; padding: 12px 36px; background: #337ab7; color: #fff; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+    .btn:hover { background: #286090; }
+    .btn-row { text-align: center; margin: 30px 0 10px; }
+    .tip { background: #fffbe6; border-left: 4px solid #faad14; padding: 12px 16px; border-radius: 4px; margin-top: 10px; color: #856404; font-size: 13px; }
+    .version { text-align: center; color: #aaa; margin-top: 20px; font-size: 13px; }
+    .version a { color: #337ab7; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>⌨ 键盘输入模拟器</h1>
+      <p class="subtitle">模拟键盘输入，解决网页不支持粘贴的问题</p>
+
+      <div class="btn-row">
+        <a class="btn" href="keyboard-simulator.zip" download="keyboard-simulator.zip">⬇ 下载插件 (ZIP)</a>
+      </div>
+
+      <div style="margin-top: 30px;">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <h3>下载并解压</h3>
+            <p>点击上方按钮下载 ZIP 文件，解压到任意文件夹</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <h3>打开扩展管理页面</h3>
+            <p>地址栏输入 <code>chrome://extensions/</code> 回车</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <h3>开启开发者模式</h3>
+            <p>点击右上角的"开发者模式"开关</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <h3>加载扩展</h3>
+            <p>点击左上角"加载已解压的扩展程序"，选择解压后的文件夹</p>
+          </div>
+        </div>
+
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <h3>开始使用</h3>
+            <p>打开任意网页，右上角会出现蓝色小球，点击即可使用</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="tip">
+        💡 提示：首次使用时，点击蓝色小球展开面板，输入文字后点击"开始输入"，然后在延迟时间内切换到目标输入框即可。
+      </div>
+    </div>
+
+    <p class="version">v1.0.0 | <a href="https://github.com/GeLith/keyboard-simulator-web" target="_blank">GitHub</a></p>
+  </div>
+</body>
+</html>
