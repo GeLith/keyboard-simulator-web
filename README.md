@@ -1,36 +1,51 @@
 # 键盘输入模拟器 Chrome 扩展 v1.0.0
 
-这是一个浏览器扩展，用于模拟键盘输入，适用于不支持粘贴输入的网页。
+模拟键盘输入，解决网页不支持粘贴的问题。
 
 GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 安装方法
 
-1. 打开 Chrome 浏览器，访问 `chrome://extensions/`
-2. 开启右上角的"开发者模式"
-3. 点击"加载已解压的扩展程序"
-4. 选择 `keyboard-simulator` 文件夹
-5. 扩展安装完成
+### 方式一：拖拽安装（推荐）
 
-## 功能特点
+1. 下载 [keyboard-simulator.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.0.0/keyboard-simulator.crx)
+2. 打开 Chrome，地址栏输入 `chrome://extensions/` 回车
+3. 开启右上角「开发者模式」
+4. 将下载的 `.crx` 文件拖入页面，点击「添加扩展程序」确认
 
-- 页面右上角显示蓝色球形悬浮图标
-- 点击球形图标展开操作面板
-- 支持开始延迟设置（秒）
-- 支持字符输入间隔设置（秒）
-- 支持拖动球形图标位置
+### 方式二：解压安装
+
+1. 下载仓库源代码（Code → Download ZIP）
+2. 解压到任意文件夹
+3. 打开 Chrome，地址栏输入 `chrome://extensions/` 回车
+4. 开启右上角「开发者模式」
+5. 点击「加载已解压的扩展程序」，选择解压后的文件夹
+
+### 安装引导页面
+
+访问 https://gelith.github.io/keyboard-simulator-web/install.html 查看图文教程
 
 ## 使用方法
 
-1. 在任意网页，点击右上角的蓝色球形图标
-2. 输入要模拟输入的文字
-3. 设置延迟时间和字符间隔
-4. 点击"开始输入"按钮
-5. 在延迟时间内切换到目标输入框
+1. 打开任意网页，右上角出现蓝色小球
+2. 点击小球展开操作面板
+3. 输入要模拟的文字
+4. 设置延迟时间和字符间隔
+5. 点击「开始输入」
+6. 在延迟时间内切换到目标输入框
 
-## 截图
+## 功能
 
-球形悬浮图标状态下，点击展开操作面板。
+- 蓝色球形悬浮图标，可拖动位置
+- 可设置开始延迟（秒）
+- 可设置字符输入间隔（秒）
+- 点击球形图标展开/收起面板
+
+## 兼容性
+
+- Google Chrome
+- Microsoft Edge
+- 其他 Chromium 内核浏览器
 
 ## 开源协议
 
