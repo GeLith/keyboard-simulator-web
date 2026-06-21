@@ -5,7 +5,7 @@
   let panel = null;
   let isDragging = false;
 
-  const VERSION = '1.0.0';
+  const VERSION = '1.1.1';
 
   function createBall() {
     if (ball) return;
@@ -132,6 +132,53 @@
       panel.classList.remove('ks-show');
     });
 
+    // 面板拖动
+    var panelHeader = document.getElementById('ks-panel-header');
+    panelHeader.style.cursor = 'move';
+
+    chrome.storage.local.get(['panelPos'], function(result) {
+      if (result.panelPos) {
+        panel.style.top = result.panelPos.top + 'px';
+        panel.style.left = result.panelPos.left + 'px';
+        panel.style.right = 'auto';
+      }
+    });
+
+    panelHeader.addEventListener('mousedown', function(e) {
+      if (e.target.id === 'ks-close') return;
+      e.preventDefault();
+      var startX = e.clientX;
+      var startY = e.clientY;
+      var startTop = panel.offsetTop;
+      var startLeft = panel.offsetLeft;
+      var moved = false;
+
+      function onMove(ev) {
+        var dx = ev.clientX - startX;
+        var dy = ev.clientY - startY;
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+        if (moved) {
+          panel.style.transition = 'none';
+          panel.style.right = 'auto';
+          panel.style.top = (startTop + dy) + 'px';
+          panel.style.left = (startLeft + dx) + 'px';
+        }
+      }
+
+      function onEnd() {
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', onEnd);
+        if (moved) {
+          chrome.storage.local.set({
+            panelPos: { top: panel.offsetTop, left: panel.offsetLeft }
+          });
+        }
+      }
+
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onEnd);
+    });
+
     document.getElementById('ks-start').addEventListener('click', function() {
       const text = document.getElementById('ks-input').value;
       if (!text.trim()) {
@@ -250,14 +297,6 @@
     return new Promise(resolve => setTimeout(resolve, ms));
   }
 
-  // 快捷键: Alt+K 切换面板
-  document.addEventListener('keydown', function(e) {
-    if (e.altKey && e.key === 'k') {
-      e.preventDefault();
-      togglePanel();
-    }
-  });
-
   chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
     if (message.action === 'startTyping') {
       createBall();
@@ -271,9 +310,6 @@
       sendResponse({ success: true });
     } else if (message.action === 'stopTyping') {
       shouldStop = true;
-      sendResponse({ success: true });
-    } else if (message.action === 'togglePanel') {
-      togglePanel();
       sendResponse({ success: true });
     }
     return true;
