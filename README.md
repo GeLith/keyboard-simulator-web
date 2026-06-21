@@ -1,4 +1,4 @@
-# 键盘输入模拟器 Chrome 扩展 v1.1.0
+# 键盘输入模拟器 Chrome 扩展 v1.1.1
 
 模拟键盘输入，解决网页不支持粘贴的问题。
 
@@ -8,12 +8,12 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ### 方式一：拖拽安装（推荐）
 
-1. 下载 [keyboard-simulator.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.0.0/keyboard-simulator.crx)
+1. 下载 [keyboard-simulator.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.1.1/keyboard-simulator.zip) 并解压
 2. 打开 Chrome，地址栏输入 `chrome://extensions/` 回车
 3. 开启右上角「开发者模式」
-4. 将下载的 `.crx` 文件拖入页面，点击「添加扩展程序」确认
+4. 点击「加载已解压的扩展程序」，选择解压后的文件夹
 
-### 方式二：解压安装
+### 方式二：源码安装
 
 1. 下载仓库源代码（Code → Download ZIP）
 2. 解压到任意文件夹
@@ -27,7 +27,7 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 使用方法
 
-1. 打开任意网页，右上角出现蓝色小球
+1. 打开任意网页，右上角出现紫色小球
 2. 点击小球展开操作面板
 3. 输入要模拟的文字
 4. 设置延迟时间和字符间隔
@@ -36,10 +36,23 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 功能
 
-- 蓝色球形悬浮图标，可拖动位置
+- 紫蓝渐变悬浮图标，可拖动位置
+- 面板窗口可拖动，位置自动保存
 - 可设置开始延迟（秒）
 - 可设置字符输入间隔（秒）
-- 点击球形图标展开/收起面板
+- 点击悬浮球展开/收起面板
+
+## 更新日志
+
+### v1.1.1
+- 删除 Alt+K 快捷键
+- 新增面板拖动窗口功能（位置自动保存）
+- 优化悬浮球图标样式（紫蓝渐变 + 发光效果）
+
+### v1.1.0
+- 修复拖动跳动问题
+- 设置持久化保存
+- 新增 Alt+K 快捷键切换面板
 
 ## 兼容性
 
