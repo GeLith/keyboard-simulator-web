@@ -61,7 +61,7 @@
         '<div class="ks-buttons"><button id="ks-start">开始输入</button><button id="ks-stop" disabled>停止</button></div>',
         '<div id="ks-status">就绪 - 点击球图标可收起</div>',
       '</div>',
-      '<div id="ks-panel-footer">v' + VERSION + ' | <a href="https://github.com/GeLith/keyboard-simulator-web" target="_blank">GitHub</a></div>'
+      '<div id="ks-panel-footer">v' + VERSION + ' | <a href="https://github.com/GeLith/keyboard-simulator-web" target="_blank">GitHub</a> | <a href="https://felixdd.top/donate.html" target="_blank">赞助</a></div>'
     ].join('');
     document.body.appendChild(panel);
     chrome.storage.local.get(['panelSettings'], function(r) { if (r.panelSettings) { if (r.panelSettings.delay !== undefined) document.getElementById('ks-delay').value = r.panelSettings.delay; if (r.panelSettings.interval !== undefined) document.getElementById('ks-interval').value = r.panelSettings.interval; } });

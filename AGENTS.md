@@ -89,6 +89,16 @@ Invoke-RestMethod -Uri "https://uploads.github.com/repos/GeLith/keyboard-simulat
 ### Blocked
 - (none)
 
+### Release Checklist
+1. 改代码
+2. 版本号同步
+3. 打包 crx + zip
+4. 更新 README.md + install.html
+5. 更新 website/keyboard.html（下载链接版本号）→ 复制到 gelithmp/keyboard.html
+6. git commit & push (两个仓库)
+7. GitHub Release
+8. Vercel 自动部署（如果没自动，手动触发）
+
 ## Key Decisions
 - 回退到 v1.1 后重新发布 v1.1.1（重置历史导致之前的提交丢失）
 - 放弃 `chrome.scripting.executeScript` + `world: 'MAIN'` 方案（CSP 或参数传递问题）
