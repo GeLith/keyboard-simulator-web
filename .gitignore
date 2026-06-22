@@ -2,3 +2,12 @@
 *.pem
 keyboard-simulator.zip
 .opencode-config.json
+
+node_modules/
+package.json
+package-lock.json
+test.js
+test.html
+test-mock.html
+website/
+*.pem
