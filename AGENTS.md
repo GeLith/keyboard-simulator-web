@@ -15,7 +15,8 @@
 
 ## 规范
 
-- 压缩包/crx 文件名必须带版本号：`keyboard-simulator-v1.1.1.zip`、`keyboard-simulator-v1.1.1.crx`
+- 压缩包/crx 文件名带版本号留档：`keyboard-simulator-v1.1.1.zip`，同时放一份固定名 `keyboard-simulator.zip` 供下载链接使用
+- 下载链接用 GitHub latest 重定向：`https://github.com/GeLith/keyboard-simulator-web/releases/latest/download/keyboard-simulator.zip`，永远指向最新版
 - 所有下载链接和安装引导优先指向官网 `felixdd.top/keyboard.html`，不要用 GitHub Pages
 - 通过 GitHub API 操作时注意 UTF-8 编码，避免中文乱码
 - `git reset --hard` 会丢失历史，谨慎使用
