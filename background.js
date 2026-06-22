@@ -9,15 +9,15 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
   }
 
   if (message.action === 'executeInMainWorld') {
-    var fn = new Function('return ' + message.func)();
+    var target = { tabId: sender.tab.id, frameIds: [sender.frameId] };
     chrome.scripting.executeScript({
-      target: { tabId: sender.tab.id, frameIds: [sender.frameId] },
+      target: target,
       world: 'MAIN',
-      func: fn,
-      args: message.args || []
+      files: ['injected.js']
     }).then(function(results) {
       sendResponse({ result: results && results[0] ? results[0].result : null });
     }).catch(function(err) {
+      console.error('[KS-BG] executeScript error:', err);
       sendResponse({ error: err.message });
     });
     return true;

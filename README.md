@@ -1,6 +1,6 @@
-# 键盘输入模拟器 Chrome 扩展 v1.1.1
+# 键盘输入模拟器 Chrome 扩展 v1.2.0
 
-模拟键盘输入，解决网页不支持粘贴的问题。
+模拟键盘输入，解决网页不支持粘贴的问题，现已支持学习通 UEditor。
 
 GitHub: https://github.com/GeLith/keyboard-simulator-web
 
@@ -8,8 +8,8 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 安装方法
 
-1. 下载 [keyboard-simulator-v1.1.1.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.1.1/keyboard-simulator-v1.1.1.crx) 拖入 Chrome 扩展管理页面安装（推荐）
-2. 或下载 [keyboard-simulator-v1.1.1.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.1.1/keyboard-simulator-v1.1.1.zip) 解压后通过「加载已解压的扩展程序」安装
+1. 下载 [keyboard-simulator-v1.2.0.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.2.0/keyboard-simulator-v1.2.0.crx) 拖入 Chrome 扩展管理页面安装（推荐）
+2. 或下载 [keyboard-simulator-v1.2.0.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.2.0/keyboard-simulator-v1.2.0.zip) 解压后通过「加载已解压的扩展程序」安装
 
 更多图文教程请访问 https://felixdd.top/keyboard.html
 
@@ -29,8 +29,13 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 - 可设置开始延迟（秒）
 - 可设置字符输入间隔（秒）
 - 点击悬浮球展开/收起面板
+- 支持超星学习通 UEditor 富文本编辑器
 
 ## 更新日志
+
+### v1.2.0
+- 支持超星学习通 UEditor 富文本编辑器
+- 采用更稳定的 execCommand 方案，无需 MAIN world 注入
 
 ### v1.1.1
 - 删除 Alt+K 快捷键

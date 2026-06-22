@@ -1,6 +1,6 @@
 *.crx
+*.zip
 *.pem
-keyboard-simulator.zip
 .opencode-config.json
 
 node_modules/
