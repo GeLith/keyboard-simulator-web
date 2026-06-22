@@ -44,6 +44,8 @@ keyboard-simulator/
 ├── AGENTS.md              # 本文件
 ├── .opencode-config.json  # GitHub token 等配置
 ├── icons/                 # 扩展图标 (svg/png16/48/128)
+├── website/                # 官网源码（gitignored，发版时手动同步）
+│   └── keyboard.html
 ├── keyboard-simulator-v1.2.0.crx
 └── keyboard-simulator-v1.2.0.zip
 ```
@@ -56,6 +58,7 @@ keyboard-simulator/
 4. 更新文档 → README.md + install.html（下载链接、功能描述、更新日志）
 5. 提交推送 → `git add -A && git commit && git push`
 6. 发布 Release → 用 .opencode-config.json 里的 token 调 GitHub API 创建 release + 上传附件
+7. 更新官网 → 修改 `website/keyboard.html` 中的下载链接版本号 → 复制到 `../gelithmp/keyboard.html` → git push gelithmp 仓库 → Vercel 自动部署
 
 ## API 创建 Release 示例
 
