@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>UEditor Test</title>
+<script src="https://ueditor.baidu.com/ueditor/1.4.3.3/ueditor.config.js"></script>
+<script src="https://ueditor.baidu.com/ueditor/1.4.3.3/ueditor.all.min.js"></script>
+</head>
+<body>
+<h3>UEditor 测试页面</h3>
+<div id="myEditor" style="width:600px;height:200px;"></div>
+<div id="status">状态：等待测试...</div>
+<script>
+var editor = UE.getEditor('myEditor');
+editor.ready(function() {
+  document.getElementById('status').textContent = '状态：UEditor 已就绪，点击编辑器后用扩展测试';
+});
+</script>
+</body>
+</html>
