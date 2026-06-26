@@ -106,6 +106,9 @@ Invoke-RestMethod -Uri "https://uploads.github.com/repos/GeLith/keyboard-simulat
 - 放弃 `iframe.contentWindow.UE` 直接调用（isolated world 无法访问 MAIN world 变量）
 - 最终方案：直接从 content script 调用 `iframe.contentDocument.execCommand('insertText', false, char)`，无需 MAIN world 注入、无需 CSP 绕过、无需消息通信
 
+## Lessons Learned
+- **版本更新必须走完整个发布流程**：改版本号 → 打包 crx+zip → 更新文档 → 更新官网 → 创建 GitHub Release 并上传附件 → 推送到两个仓库。只改版本号和链接但跳过 Release 创建，下载会 404。
+
 ## Chaoxing UEditor 攻关记录
 - 核心问题：UEditor iframe 同源，但其 JS API（UE 全局）在 isolated world 不可达
 - CSP `script-src 'self'` 阻止 inline script 注入到 MAIN world
