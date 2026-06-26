@@ -4,7 +4,7 @@
   var ball = null;
   var panel = null;
 
-  var VERSION = '1.2.0';
+  var VERSION = '1.2.2';
   var isTopFrame = (window.top === window);
 
   if (isTopFrame) createBall();
@@ -34,12 +34,11 @@
     ball.id = 'ks-ball';
     ball.innerHTML = '<span id="ks-ball-icon">&#9000;</span>';
     document.body.appendChild(ball);
-    chrome.storage.local.get(['ballPos'], function(r) { if (r.ballPos) { ball.style.top = r.ballPos.top + 'px'; ball.style.left = r.ballPos.left + 'px'; ball.style.right = 'auto'; } });
     ball.addEventListener('mousedown', function(e) {
       e.preventDefault();
       var sx = e.clientX, sy = e.clientY, st = ball.offsetTop, sl = ball.offsetLeft, mv = false;
       function mm(ev) { if (Math.abs(ev.clientX - sx) > 3 || Math.abs(ev.clientY - sy) > 3) mv = true; if (mv) { ball.style.transition = 'none'; ball.style.right = 'auto'; ball.style.top = (st + ev.clientY - sy) + 'px'; ball.style.left = (sl + ev.clientX - sx) + 'px'; } }
-      function mu() { document.removeEventListener('mousemove', mm); document.removeEventListener('mouseup', mu); if (!mv) togglePanel(); else chrome.storage.local.set({ ballPos: { top: ball.offsetTop, left: ball.offsetLeft } }); }
+      function mu() { document.removeEventListener('mousemove', mm); document.removeEventListener('mouseup', mu); if (!mv) togglePanel(); }
       document.addEventListener('mousemove', mm); document.addEventListener('mouseup', mu);
     });
   }
@@ -59,6 +58,7 @@
           '<div class="ks-row"><label>字符间隔(秒):</label><input type="number" id="ks-interval" min="0.01" max="5" step="0.01" value="0.05"></div>',
         '</div>',
         '<div class="ks-buttons"><button id="ks-start">开始输入</button><button id="ks-stop" disabled>停止</button></div>',
+        '<button id="ks-clear" class="ks-btn-clear">清空输入框</button>',
         '<div id="ks-status">就绪 - 点击球图标可收起</div>',
       '</div>',
       '<div id="ks-panel-footer">v' + VERSION + ' | <a href="https://github.com/GeLith/keyboard-simulator-web" target="_blank">GitHub</a> | <a href="https://felixdd.top/donate.html" target="_blank">赞助</a></div>'
@@ -71,12 +71,11 @@
     document.getElementById('ks-close').addEventListener('click', function() { panel.classList.remove('ks-show'); });
     var hdr = document.getElementById('ks-panel-header');
     hdr.style.cursor = 'move';
-    chrome.storage.local.get(['panelPos'], function(r) { if (r.panelPos) { panel.style.top = r.panelPos.top + 'px'; panel.style.left = r.panelPos.left + 'px'; panel.style.right = 'auto'; } });
     hdr.addEventListener('mousedown', function(e) {
       if (e.target.id === 'ks-close') return; e.preventDefault();
       var sx = e.clientX, sy = e.clientY, st = panel.offsetTop, sl = panel.offsetLeft, mv = false;
       function mv2(ev) { if (Math.abs(ev.clientX - sx) > 3 || Math.abs(ev.clientY - sy) > 3) mv = true; if (mv) { panel.style.transition = 'none'; panel.style.right = 'auto'; panel.style.top = (st + ev.clientY - sy) + 'px'; panel.style.left = (sl + ev.clientX - sx) + 'px'; } }
-      function up() { document.removeEventListener('mousemove', mv2); document.removeEventListener('mouseup', up); if (mv) chrome.storage.local.set({ panelPos: { top: panel.offsetTop, left: panel.offsetLeft } }); }
+      function up() { document.removeEventListener('mousemove', mv2); document.removeEventListener('mouseup', up); }
       document.addEventListener('mousemove', mv2); document.addEventListener('mouseup', up);
     });
     document.getElementById('ks-start').addEventListener('click', function() {
@@ -90,6 +89,7 @@
       startTyping({ text: txt, startDelay: parseFloat(document.getElementById('ks-delay').value) * 1000, charInterval: parseFloat(document.getElementById('ks-interval').value) * 1000 });
     });
     document.getElementById('ks-stop').addEventListener('click', function() { shouldStop = true; document.getElementById('ks-status').textContent = '正在停止...'; });
+    document.getElementById('ks-clear').addEventListener('click', function() { document.getElementById('ks-input').value = ''; document.getElementById('ks-input').focus(); });
   }
 
   function findUeditorIframe() {

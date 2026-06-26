@@ -192,6 +192,24 @@
   cursor: not-allowed;
 }
 
+.ks-btn-clear {
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  background: #f0f0f0;
+  color: #666;
+  border: 1px dashed #ccc;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.ks-btn-clear:hover {
+  background: #ffe6e6;
+  color: #d9534f;
+  border-color: #d9534f;
+}
+
 #ks-status {
   font-size: 12px;
   color: #888;
