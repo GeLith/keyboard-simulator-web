@@ -4,7 +4,7 @@
   var ball = null;
   var panel = null;
 
-  var VERSION = '1.2.2';
+  var VERSION = '1.2.3';
   var isTopFrame = (window.top === window);
 
   if (isTopFrame) createBall();
@@ -59,6 +59,7 @@
         '</div>',
         '<div class="ks-buttons"><button id="ks-start">开始输入</button><button id="ks-stop" disabled>停止</button></div>',
         '<button id="ks-clear" class="ks-btn-clear">清空输入框</button>',
+        '<a id="ks-souti" href="https://microsoftedge.microsoft.com/addons/detail/abkclgdmdkokpdkbpdkoiiemhcaafbkg" target="_blank" title="大学搜题酱插件 - Edge 扩展商店">一键安装大学搜题酱</a>',
         '<div id="ks-status">就绪 - 点击球图标可收起</div>',
       '</div>',
       '<div id="ks-panel-footer">v' + VERSION + ' | <a href="https://github.com/GeLith/keyboard-simulator-web" target="_blank">GitHub</a> | <a href="https://felixdd.top/donate.html" target="_blank">赞助</a></div>'

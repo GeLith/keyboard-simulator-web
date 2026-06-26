@@ -3,7 +3,7 @@
 ## 基本信息
 
 - 项目：键盘输入模拟器 Chrome 扩展
-- 当前版本：v1.2.2
+- 当前版本：v1.2.3
 - 本地路径：C:\Users\29372\keyboard-simulator
 - GitHub 仓库：https://github.com/GeLith/keyboard-simulator-web
 - 官网：https://felixdd.top/keyboard.html
@@ -46,8 +46,8 @@ keyboard-simulator/
 ├── icons/                 # 扩展图标 (svg/png16/48/128)
 ├── website/                # 官网源码（gitignored，发版时手动同步）
 │   └── keyboard.html
-├── keyboard-simulator-v1.2.2.crx
-└── keyboard-simulator-v1.2.2.zip
+├── keyboard-simulator-v1.2.3.crx
+└── keyboard-simulator-v1.2.3.zip
 ```
 
 ## 发布流程
@@ -74,6 +74,7 @@ Invoke-RestMethod -Uri "https://uploads.github.com/repos/GeLith/keyboard-simulat
 
 ## Progress
 ### Done
+- v1.2.3 released：新增一键安装大学搜题酱跳转链接
 - v1.2.2 released：悬浮球/面板位置重置 + 清空按钮
 - v1.1.1 released：删除 Alt+K 快捷键、面板可拖动（位置自动保存）、悬浮球图标优化（紫蓝渐变）
 - 下载链接改为 GitHub Release 带版本号路径
@@ -120,6 +121,6 @@ Invoke-RestMethod -Uri "https://uploads.github.com/repos/GeLith/keyboard-simulat
 ## Relevant Files
 - `content.js`: 核心逻辑，含 UEditor iframe 检测及 execCommand 输入
 - `background.js`: Service Worker，处理 typingComplete 和 executeInMainWorld（非 UEditor 回退）
-- `manifest.json`: v1.2.2，permissions: [activeTab, scripting, storage]，all_frames: true
+- `manifest.json`: v1.2.3，permissions: [activeTab, scripting, storage]，all_frames: true
 - `injected.js`: 非 UEditor 回退路径用（contenteditable 元素）
 - `install.html`: 安装引导页，链接指向官网

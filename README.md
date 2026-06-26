@@ -1,4 +1,4 @@
-# 键盘输入模拟器 Chrome 扩展 v1.2.2
+# 键盘输入模拟器 Chrome 扩展 v1.2.3
 
 模拟键盘输入，解决网页不支持粘贴的问题，现已支持学习通 UEditor。
 
@@ -8,8 +8,8 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 安装方法
 
-1. 下载 [keyboard-simulator-v1.2.2.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.2.2/keyboard-simulator-v1.2.2.crx) 拖入 Chrome 扩展管理页面安装（推荐）
-2. 或下载 [keyboard-simulator-v1.2.2.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.2.2/keyboard-simulator-v1.2.2.zip) 解压后通过「加载已解压的扩展程序」安装
+1. 下载 [keyboard-simulator-v1.2.3.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.2.3/keyboard-simulator-v1.2.3.crx) 拖入 Chrome 扩展管理页面安装（推荐）
+2. 或下载 [keyboard-simulator-v1.2.3.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.2.3/keyboard-simulator-v1.2.3.zip) 解压后通过「加载已解压的扩展程序」安装
 
 更多图文教程请访问 https://felixdd.top/keyboard.html
 
@@ -34,9 +34,14 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 更新日志
 
+### v1.2.3
+- 新增一键安装大学搜题酱跳转链接
+- 新增清空输入框按钮
+- 悬浮球和面板位置刷新重置
+
 ### v1.2.2
-- 每次刷新页面悬浮球和面板位置重置到默认
-- 新增一键清空输入框按钮
+- 支持超星学习通 UEditor 富文本编辑器
+- 采用更稳定的 execCommand 方案，无需 MAIN world 注入
 
 ### v1.1.1
 - 删除 Alt+K 快捷键

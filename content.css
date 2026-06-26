@@ -210,6 +210,20 @@
   border-color: #d9534f;
 }
 
+#ks-souti {
+  display: block;
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 12px;
+  color: #337ab7;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+#ks-souti:hover {
+  color: #23527c;
+  text-decoration: underline;
+}
+
 #ks-status {
   font-size: 12px;
   color: #888;
