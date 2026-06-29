@@ -4,7 +4,7 @@
   var ball = null;
   var panel = null;
 
-  var VERSION = '1.2.3';
+  var VERSION = '1.2.5';
   var isTopFrame = (window.top === window);
 
   if (isTopFrame) createBall();

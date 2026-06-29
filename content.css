@@ -4,9 +4,9 @@
   right: 20px;
   width: 44px;
   height: 44px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #fff;
   border-radius: 50%;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   z-index: 9999999;
   cursor: pointer;
   display: flex;
@@ -14,12 +14,12 @@
   justify-content: center;
   user-select: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(0, 0, 0, 0.08);
 }
 
 #ks-ball:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 25px rgba(102, 126, 234, 0.7);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
 }
 
 #ks-ball:active {
@@ -28,10 +28,9 @@
 
 #ks-ball-icon {
   font-size: 20px;
-  color: white;
+  color: #667eea;
   line-height: 1;
   pointer-events: none;
-  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2));
 }
 
 #keyboard-simulator-panel {
@@ -65,14 +64,15 @@
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #fff;
+  color: #333;
   user-select: none;
   cursor: move;
 }
 
 #ks-panel-header span:first-child {
   font-size: 16px;
+  color: #667eea;
 }
 
 #ks-panel-title {
@@ -83,7 +83,7 @@
 #ks-close {
   background: none;
   border: none;
-  color: white;
+  color: #999;
   font-size: 18px;
   cursor: pointer;
   padding: 0;
@@ -98,7 +98,7 @@
 }
 
 #ks-close:hover {
-  background: rgba(255,255,255,0.25);
+  background: rgba(0,0,0,0.08);
 }
 
 #ks-panel-body {
