@@ -1,4 +1,4 @@
-# 键盘输入模拟器 Chrome 扩展 v1.2.5
+# 键盘输入模拟器 Chrome 扩展 v1.3
 
 模拟键盘输入，解决网页不支持粘贴的问题，现已支持学习通 UEditor。
 
@@ -8,8 +8,8 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 安装方法
 
-1. 下载 [keyboard-simulator-v1.2.5.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.2.5/keyboard-simulator-v1.2.5.crx) 拖入 Chrome 扩展管理页面安装（推荐）
-2. 或下载 [keyboard-simulator-v1.2.5.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.2.5/keyboard-simulator-v1.2.5.zip) 解压后通过「加载已解压的扩展程序」安装
+1. 下载 [keyboard-simulator-v1.3.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.3/keyboard-simulator-v1.3.crx) 拖入 Chrome 扩展管理页面安装（推荐）
+2. 或下载 [keyboard-simulator-v1.3.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.3/keyboard-simulator-v1.3.zip) 解压后通过「加载已解压的扩展程序」安装
 
 更多图文教程请访问 https://felixdd.top/keyboard.html
 
@@ -34,7 +34,7 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 更新日志
 
-### v1.2.5
+### v1.3
 - 悬浮球改为白色背景 + 紫色图标
 - 面板标题栏改为白色主题
 
