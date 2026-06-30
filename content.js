@@ -4,7 +4,7 @@
   var ball = null;
   var panel = null;
 
-  var VERSION = '1.2.5';
+  var VERSION = '1.3';
   var isTopFrame = (window.top === window);
 
   if (isTopFrame) createBall();
@@ -54,8 +54,8 @@
       '<div id="ks-panel-body">',
         '<textarea id="ks-input" placeholder="输入要模拟输入的文字..."></textarea>',
         '<div class="ks-settings">',
-          '<div class="ks-row"><label>开始延迟(秒):</label><input type="number" id="ks-delay" min="0" max="60" step="0.5" value="2"></div>',
-          '<div class="ks-row"><label>字符间隔(秒):</label><input type="number" id="ks-interval" min="0.01" max="5" step="0.01" value="0.05"></div>',
+          '<div class="ks-row"><label>开始延迟(秒):</label><input type="number" id="ks-delay" min="0" max="60" step="0.5" value="3"></div>',
+          '<div class="ks-row"><label>字符间隔(秒):</label><input type="number" id="ks-interval" min="0.01" max="5" step="0.01" value="0.01"></div>',
         '</div>',
         '<div class="ks-buttons"><button id="ks-start">开始输入</button><button id="ks-stop" disabled>停止</button></div>',
         '<button id="ks-clear" class="ks-btn-clear">清空输入框</button>',
