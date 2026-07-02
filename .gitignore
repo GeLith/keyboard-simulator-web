@@ -11,4 +11,5 @@ test.html
 test-mock.html
 website/
 scriptcat/
-*.pem
+AGENTS.md
+install.html
