@@ -4,7 +4,7 @@
   var ball = null;
   var panel = null;
 
-  var VERSION = '1.3';
+  var VERSION = '1.4';
   var isTopFrame = (window.top === window);
 
   if (isTopFrame) createBall();
@@ -17,6 +17,10 @@
         document.getElementById('ks-delay').value = msg.settings.startDelay / 1000;
         document.getElementById('ks-interval').value = msg.settings.charInterval / 1000;
         document.getElementById('ks-input').value = msg.settings.text;
+        isTyping = true; shouldStop = false;
+        document.getElementById('ks-start').disabled = true;
+        document.getElementById('ks-stop').disabled = false;
+        document.getElementById('ks-status').textContent = '准备输入...';
         startTyping(msg.settings);
       }
       sendResponse({ success: true });
@@ -50,9 +54,9 @@
     panel = document.createElement('div');
     panel.id = 'keyboard-simulator-panel';
     panel.innerHTML = [
-      '<div id="ks-panel-header"><span>&#9000;</span><span id="ks-panel-title">键盘输入模拟器</span><button id="ks-close">&#10005;</button></div>',
+      '<div id="ks-panel-header"><span>&#9000;</span><span id="ks-panel-title">学习通键盘输入器</span><button id="ks-close">&#10005;</button></div>',
       '<div id="ks-panel-body">',
-        '<textarea id="ks-input" placeholder="输入要模拟输入的文字..."></textarea>',
+        '<textarea id="ks-input" class="canEnterType" placeholder="输入要模拟输入的文字..."></textarea>',
         '<div class="ks-settings">',
           '<div class="ks-row"><label>开始延迟(秒):</label><input type="number" id="ks-delay" min="0" max="60" step="0.5" value="3"></div>',
           '<div class="ks-row"><label>字符间隔(秒):</label><input type="number" id="ks-interval" min="0.01" max="5" step="0.01" value="0.01"></div>',
@@ -93,14 +97,75 @@
     document.getElementById('ks-clear').addEventListener('click', function() { document.getElementById('ks-input').value = ''; document.getElementById('ks-input').focus(); });
   }
 
+  var lastUEditorId = null;
+
+  function setupEditorFocusTracking() {
+    var editors = document.querySelectorAll('.edui-editor');
+    for (var i = 0; i < editors.length; i++) {
+      var ed = editors[i];
+      if (ed._ksTracked) continue;
+      ed._ksTracked = true;
+      var ifr = ed.querySelector('iframe');
+      if (!ifr) continue;
+      try {
+        var doc = ifr.contentDocument;
+        if (!doc) continue;
+        doc.addEventListener('focus', function() {
+          var qParent = ed.closest('.sub_que_div_parent, .stem_answer');
+          if (qParent) {
+            var ta = qParent.querySelector('textarea[id^="answer"]');
+            if (ta) lastUEditorId = ta.id;
+          }
+        }, true);
+      } catch(e) {}
+    }
+  }
+
+  var ksObserver = new MutationObserver(function() { setupEditorFocusTracking(); });
+  ksObserver.observe(document.body, { childList: true, subtree: true });
+  setupEditorFocusTracking();
+
+  function findFocusedEditor() {
+    var editors = document.querySelectorAll('.edui-editor');
+    for (var i = 0; i < editors.length; i++) {
+      var ifr = editors[i].querySelector('iframe');
+      if (ifr) {
+        try {
+          var doc = ifr.contentDocument;
+          if (doc && doc.hasFocus()) {
+            var ta = findTextareaByIframe(ifr);
+            return { iframe: ifr, editorId: ta ? ta.id : 'unknown' };
+          }
+        } catch(e) {}
+      }
+    }
+    return null;
+  }
+
   function findUeditorIframe() {
+    var active = document.activeElement;
+    if (active && active.tagName === 'IFRAME') {
+      try {
+        var doc = active.contentDocument;
+        if (doc && doc.body && (doc.body.getAttribute('contenteditable') === 'true' || doc.querySelector('.edui-body-container'))) {
+          return active;
+        }
+      } catch(e) {}
+    }
+    if (active && active.ownerDocument && active.ownerDocument !== document) {
+      var iframes = document.querySelectorAll('iframe');
+      for (var i = 0; i < iframes.length; i++) {
+        try {
+          if (iframes[i].contentDocument === active.ownerDocument) { return iframes[i]; }
+        } catch(e) {}
+      }
+    }
     var iframes = document.querySelectorAll('iframe');
     for (var i = 0; i < iframes.length; i++) {
       try {
         var doc = iframes[i].contentDocument;
         if (!doc || !doc.body) continue;
         if (doc.body.getAttribute('contenteditable') === 'true' || doc.querySelector('.edui-body-container')) {
-          console.log('[KS] found UEditor iframe:', iframes[i].id || i);
           return iframes[i];
         }
       } catch(e) {}
@@ -108,33 +173,185 @@
     return null;
   }
 
-  function startTyping(settings) {
-    console.log('[KS] activeElement:', document.activeElement ? document.activeElement.tagName : 'null');
+  function findActiveUEditor() {
+    var saveBtns = document.querySelectorAll('.saveButtonClass');
+    logDebug('findActiveUEditor: found ' + saveBtns.length + ' save buttons');
+    for (var i = 0; i < saveBtns.length; i++) {
+      var vis = saveBtns[i].offsetWidth > 0 && saveBtns[i].offsetHeight > 0;
+      var dataid = saveBtns[i].getAttribute('dataid');
+      logDebug('  saveBtn[' + i + '] visible=' + vis + ' dataid=' + dataid);
+      if (vis && dataid) {
+        var textarea = document.getElementById('answer' + dataid);
+        if (!textarea) { logDebug('  textarea answer' + dataid + ' not found'); continue; }
+        var qParent = textarea.closest('.sub_que_div_parent, .stem_answer');
+        if (!qParent) { logDebug('  no question parent for ' + textarea.id); continue; }
+        var editor = qParent.querySelector('.edui-editor');
+        if (!editor) { logDebug('  no edui-editor in question parent'); continue; }
+        var iframe = editor.querySelector('iframe');
+        if (iframe) { logDebug('  -> returning ' + textarea.id); return { iframe: iframe, editorId: textarea.id }; }
+      }
+    }
+    logDebug('findActiveUEditor: no active editor found');
+    return null;
+  }
+
+  function findUeditorId() {
     var ueFrame = findUeditorIframe();
-    if (ueFrame) {
-      typeViaExecCommand(ueFrame, settings);
+    if (!ueFrame) return null;
+    var ta = findTextareaByIframe(ueFrame);
+    return ta ? ta.id : null;
+  }
+
+  function logDebug(msg) {
+    try {
+      chrome.storage.local.get(['ks_debug'], function(r) {
+        var logs = r.ks_debug || [];
+        logs.push(new Date().toISOString() + ' ' + msg);
+        if (logs.length > 50) logs = logs.slice(-50);
+        chrome.storage.local.set({ ks_debug: logs });
+      });
+    } catch(e) {}
+    console.log('[KS] ' + msg);
+  }
+
+  function findEditorByTextareaId(taId) {
+    var ta = document.getElementById(taId);
+    if (!ta) return null;
+    var qParent = ta.closest('.sub_que_div_parent, .stem_answer');
+    if (qParent) {
+      var editor = qParent.querySelector('.edui-editor');
+      if (editor) {
+        var ifr = editor.querySelector('iframe');
+        if (ifr) return ifr;
+      }
+    }
+    return null;
+  }
+
+  function startTyping(settings) {
+    var editorFrame = null;
+    var debug = '';
+
+    logDebug('startTyping called, lastUEditorId=' + lastUEditorId);
+
+    var activeSave = findActiveUEditor();
+    if (activeSave) {
+      editorFrame = activeSave.iframe;
+      debug = 'via saveBtn=' + activeSave.editorId;
+      logDebug('saveBtn method found: ' + activeSave.editorId);
+    }
+
+    if (!editorFrame) {
+      var focused = findFocusedEditor();
+      if (focused) {
+        editorFrame = focused.iframe;
+        debug = 'via findFocusedEditor=' + focused.editorId;
+        logDebug('findFocusedEditor found: ' + focused.editorId);
+      }
+    }
+
+    if (!editorFrame && lastUEditorId) {
+      editorFrame = findEditorByTextareaId(lastUEditorId);
+      if (editorFrame) debug = 'via lastUEditorId=' + lastUEditorId;
+      logDebug('lastUEditorId method: ' + (editorFrame ? 'found ' + lastUEditorId : 'not found'));
+    }
+
+    if (!editorFrame) {
+      var activeEl = document.activeElement;
+      logDebug('activeElement=' + (activeEl ? activeEl.tagName + '#' + (activeEl.id || '') : 'null'));
+      if (activeEl && activeEl.tagName === 'IFRAME') {
+        var ta = findTextareaByIframe(activeEl);
+        if (ta) {
+          editorFrame = activeEl;
+          debug = 'via activeElement=' + ta.id;
+        }
+      }
+    }
+
+    if (!editorFrame) {
+      editorFrame = findUeditorIframe();
+      debug = 'via iframe scan: ' + (editorFrame ? 'found' : 'null');
+      logDebug('iframe scan: ' + (editorFrame ? 'found' : 'null'));
+    }
+
+    if (!editorFrame) {
+      var allIframes = document.querySelectorAll('.edui-editor iframe');
+      for (var i = allIframes.length - 1; i >= 0; i--) {
+        try {
+          var doc = allIframes[i].contentDocument;
+          if (doc && doc.body && !doc.body.textContent.trim()) {
+            editorFrame = allIframes[i];
+            debug = 'via empty editor #' + i;
+            logDebug('found empty editor at index ' + i);
+            break;
+          }
+        } catch(e) {}
+      }
+    }
+
+    var statusEl = document.getElementById('ks-status');
+    if (statusEl) statusEl.textContent = debug;
+
+    if (editorFrame) {
+      typeViaExecCommand(editorFrame, settings);
     } else {
       typeLocally(settings);
     }
   }
 
-  function typeViaExecCommand(iframe, settings) {
-    console.log('[KS] typing via execCommand on iframe contentDocument');
-    var doc = iframe.contentDocument;
-    var body = doc.body;
-    body.focus();
+  function typeViaUeApi(editorId, settings) {
     var statusEl = document.getElementById('ks-status');
     async function run() {
       await sleep(settings.startDelay);
-      for (let i = 0; i < settings.text.length; i++) {
+      if (shouldStop) { finish('已停止'); return; }
+      if (statusEl) statusEl.textContent = '正在输入...';
+      var html = settings.text.replace(/\n/g, '<br/>');
+      document.body.setAttribute('data-ks-ue-id', editorId);
+      document.body.setAttribute('data-ks-ue-text', html);
+      chrome.runtime.sendMessage({ action: 'ueSetContent', editorId: editorId, text: html });
+      await sleep(500);
+      if (statusEl) statusEl.textContent = '输入完成';
+      finish('输入完成');
+    }
+    function finish(msg) {
+      if (statusEl) { statusEl.textContent = msg; document.getElementById('ks-start').disabled = false; document.getElementById('ks-stop').disabled = true; isTyping = false; }
+      try { chrome.runtime.sendMessage({ action: 'typingComplete' }); } catch(e) {}
+    }
+    run();
+  }
+
+  function findTextareaByIframe(iframe) {
+    var editor = iframe.closest('.edui-editor');
+    if (editor) {
+      var qParent = editor.closest('.sub_que_div_parent, .stem_answer');
+      if (qParent) {
+        var ta = qParent.querySelector('textarea[id^="answer"]');
+        if (ta) return ta;
+      }
+    }
+    return null;
+  }
+
+  function typeViaExecCommand(iframe, settings) {
+    var doc = iframe.contentDocument;
+    var body = doc.body;
+    var statusEl = document.getElementById('ks-status');
+    var ta = findTextareaByIframe(iframe);
+    var targetId = ta ? ta.id : 'unknown';
+    logDebug('typeViaExecCommand: target=' + targetId);
+    if (statusEl) statusEl.textContent = '写入: ' + targetId;
+    async function run() {
+      await sleep(settings.startDelay);
+      if (shouldStop) { finish('已停止'); return; }
+      body.focus();
+      var sel = doc.getSelection();
+      sel.collapse(body, body.childNodes.length);
+      for (var i = 0; i < settings.text.length; i++) {
         if (shouldStop) { finish('已停止'); return; }
         if (statusEl) statusEl.textContent = '正在输入 (' + (i + 1) + '/' + settings.text.length + ')...';
         var char = settings.text[i];
-        body.focus();
-        var sel = doc.getSelection();
         sel.collapse(body, body.childNodes.length);
-        var ok = doc.execCommand('insertText', false, char);
-        console.log('[KS] execCommand result:', ok, 'char:', char);
+        if (char === '\n') { doc.execCommand('insertLineBreak'); } else { doc.execCommand('insertText', false, char); }
         if (i < settings.text.length - 1) await sleep(settings.charInterval);
       }
       finish('输入完成');

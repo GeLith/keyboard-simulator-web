@@ -9,7 +9,7 @@
       var editor = UE.instants[keys[i]];
       if (editor && editor.body && editor.body.contentEditable === 'true') {
         editor.focus();
-        editor.execCommand('insertText', c);
+        if (c === '\n') { editor.execCommand('insertHtml', '<br/>'); } else { editor.execCommand('insertText', c); }
         return 'ueditor';
       }
     }
@@ -27,7 +27,7 @@
       return 'input';
     } else if (active.isContentEditable || (active.getAttribute && active.getAttribute('contenteditable') === 'true')) {
       active.focus();
-      document.execCommand('insertText', false, c);
+      if (c === '\n') { document.execCommand('insertLineBreak'); } else { document.execCommand('insertText', false, c); }
       return 'contenteditable';
     }
   }

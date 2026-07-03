@@ -1,6 +1,6 @@
-# 键盘输入模拟器 Chrome 扩展 v1.3
+# 学习通键盘输入器 v1.4
 
-模拟键盘输入，解决网页不支持粘贴的问题，现已支持学习通 UEditor。
+专为超星学习通优化的键盘输入模拟器，解决网页不支持粘贴的问题。
 
 GitHub: https://github.com/GeLith/keyboard-simulator-web
 
@@ -8,8 +8,8 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 安装方法
 
-1. 下载 [keyboard-simulator-v1.3.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.3/keyboard-simulator-v1.3.crx) 拖入 Chrome 扩展管理页面安装（推荐）
-2. 或下载 [keyboard-simulator-v1.3.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.3/keyboard-simulator-v1.3.zip) 解压后通过「加载已解压的扩展程序」安装
+1. 下载 [keyboard-simulator-v1.4.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.4/keyboard-simulator-v1.4.crx) 拖入 Chrome 扩展管理页面安装（推荐）
+2. 或下载 [keyboard-simulator-v1.4.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.4/keyboard-simulator-v1.4.zip) 解压后通过「加载已解压的扩展程序」安装
 
 更多图文教程请访问 https://felixdd.top/keyboard.html
 
@@ -31,8 +31,16 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 - 点击悬浮球展开/收起面板
 - 一键清空输入框
 - 支持超星学习通 UEditor 富文本编辑器
+- 多编辑器精准检测，不再串台
 
 ## 更新日志
+
+### v1.4
+- 修复学习通预览/复习模式下 UEditor 打字串台问题
+- 采用 contentDocument 焦点监听替代父文档 focus 事件
+- MutationObserver 动态覆盖懒加载编辑器
+- 优化编辑器检测优先级，消除串台可能
+- 添加调试日志功能
 
 ### v1.3
 - 悬浮球改为白色背景 + 紫色图标
