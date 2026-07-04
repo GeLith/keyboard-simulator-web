@@ -1,4 +1,4 @@
-# 学习通键盘输入器 v1.4
+# 学习通键盘输入器 v1.4.2
 
 专为超星学习通优化的键盘输入模拟器，解决网页不支持粘贴的问题。
 
@@ -8,8 +8,8 @@ GitHub: https://github.com/GeLith/keyboard-simulator-web
 
 ## 安装方法
 
-1. 下载 [keyboard-simulator-v1.4.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.4/keyboard-simulator-v1.4.crx) 拖入 Chrome 扩展管理页面安装（推荐）
-2. 或下载 [keyboard-simulator-v1.4.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.4/keyboard-simulator-v1.4.zip) 解压后通过「加载已解压的扩展程序」安装
+1. 下载 [keyboard-simulator-v1.4.2.crx](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.4.2/keyboard-simulator-v1.4.2.crx) 拖入 Chrome 扩展管理页面安装（推荐）
+2. 或下载 [keyboard-simulator-v1.4.2.zip](https://github.com/GeLith/keyboard-simulator-web/releases/download/v1.4.2/keyboard-simulator-v1.4.2.zip) 解压后通过「加载已解压的扩展程序」安装
 
 更多图文教程请访问 https://felixdd.top/keyboard.html
 
