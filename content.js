@@ -292,7 +292,7 @@
     var statusEl = document.getElementById('ks-status');
     if (statusEl) statusEl.textContent = debug;
 
-    if (editorFrame) {
+    if (editorFrame || document.querySelector('.edui-editor')) {
       typeViaExecCommand(editorFrame, settings);
     } else {
       typeLocally(settings);
@@ -332,17 +332,30 @@
     return null;
   }
 
-  function typeViaExecCommand(iframe, settings) {
-    var doc = iframe.contentDocument;
-    var body = doc.body;
+  function typeViaExecCommand(initialIframe, settings) {
     var statusEl = document.getElementById('ks-status');
-    var ta = findTextareaByIframe(iframe);
-    var targetId = ta ? ta.id : 'unknown';
-    logDebug('typeViaExecCommand: target=' + targetId);
-    if (statusEl) statusEl.textContent = '写入: ' + targetId;
     async function run() {
       await sleep(settings.startDelay);
       if (shouldStop) { finish('已停止'); return; }
+
+      var iframe = initialIframe;
+      var focused = findFocusedEditor();
+      if (focused) {
+        iframe = focused.iframe;
+      }
+
+      if (!iframe) {
+        logDebug('typeViaExecCommand: no editor found after delay, fallback to typeLocally');
+        typeLocally(settings);
+        return;
+      }
+
+      var doc = iframe.contentDocument;
+      var body = doc.body;
+      var ta = findTextareaByIframe(iframe);
+      var targetId = ta ? ta.id : 'unknown';
+      logDebug('typeViaExecCommand: target=' + targetId);
+      if (statusEl) statusEl.textContent = '写入: ' + targetId;
       body.focus();
       var sel = doc.getSelection();
       sel.collapse(body, body.childNodes.length);
